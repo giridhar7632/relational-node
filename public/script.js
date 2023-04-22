@@ -1,4 +1,4 @@
-const API_ENDPOINT = `http://localhost:3000/expenses`
+const API_ENDPOINT = `https://relational-node.onrender.com/expenses`
 // Define variables for the DOM elements
 const form = document.querySelector('form')
 const expenseNameInput = document.querySelector('#expense-name')
