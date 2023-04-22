@@ -5,11 +5,7 @@ const router = express.Router()
 
 // Create connection pool to MySQL database
 const pool = mysql.createPool({
-	connectionLimit: 10,
-	database: 'tracker',
-	user: 'r2yc537ojbffiatg971a',
-	host: 'aws.connect.psdb.cloud',
-	password: 'pscale_pw_KezXO8dK68npa8bVXMqmK1Eu2VBVEwqkfKg6i62lovP',
+	connectionString: process.env.MY_DB_STRING,
 	ssl: true,
 })
 

@@ -3,21 +3,14 @@ const express = require('express')
 const router = express.Router()
 
 // Create an instance of Sequelize and connect to the database
-const sequelize = new Sequelize(
-	'tracker',
-	'l9ii8wzorch0ei3l6c4u',
-	'pscale_pw_mrkKUdTxBEQ9LRvuckcgwJD2boAUdOMarCEoSpLWoKG',
-	{
-		host: 'aws.connect.psdb.cloud',
-		dialect: 'mysql',
-		dialectOptions: {
-			ssl: {
-				require: true,
-				rejectUnauthorized: false, // to allow self-signed certificates or invalid certificates
-			},
+const sequelize = new Sequelize(process.env.MY_DB_STRING, {
+	dialectOptions: {
+		ssl: {
+			require: true,
+			rejectUnauthorized: false, // to allow self-signed certificates or invalid certificates
 		},
-	}
-)
+	},
+})
 
 // Define the Expense model
 const Expense = sequelize.define(
