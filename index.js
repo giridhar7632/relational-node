@@ -15,10 +15,12 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 // const postgresRouter = require('./databases/postgres.js')
-const mysqlRouter = require('./databases/mysql.js')
+// const mysqlRouter = require('./databases/mysql.js')
+const sequalizeRouter = require('./databases/sequalize.js')
 
 // app.use('/pg', postgresRouter)
-app.use('/mysql', mysqlRouter)
+// app.use('/mysql', mysqlRouter)
+app.use('/seq', sequalizeRouter)
 
 // Start the server
 const PORT = process.env.PORT || 3000
