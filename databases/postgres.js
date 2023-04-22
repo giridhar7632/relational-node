@@ -3,25 +3,10 @@ const express = require('express')
 const router = express.Router()
 
 // Create a new client for handling database connections
-const connectionString = process.env.CONNECTION_STRING
-let client
 const pool = new Pool({
-	connectionString,
+	connectionString: process.env.CONNECTION_STRING,
 	ssl: true,
 })
-
-;(async () => {
-	client = await pool.connect()
-	console.log('connected to database 🎉')
-
-	// Define function to get all expenses from the database
-	// CREATE TABLE expenses (
-	// 	id SERIAL PRIMARY KEY,
-	// 	name TEXT,
-	// 	amount NUMERIC,
-	// 	date DATE
-	// );
-})().catch((err) => console.error(err.stack))
 
 // Define function to get all expenses from the database
 async function getExpenses() {

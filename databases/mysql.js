@@ -7,28 +7,11 @@ const router = express.Router()
 const pool = mysql.createPool({
 	connectionLimit: 10,
 	database: 'tracker',
-	user: 'l1rbiq5mzmostlo42ypn',
+	user: 'r2yc537ojbffiatg971a',
 	host: 'aws.connect.psdb.cloud',
-	password: 'pscale_pw_JXuJU8OXPnOgVRfpX9UsaQVKUCt57d5bhMeqVJdn0aV',
+	password: 'pscale_pw_KezXO8dK68npa8bVXMqmK1Eu2VBVEwqkfKg6i62lovP',
 	ssl: true,
 })
-
-;(async () => {
-	await pool.getConnection(async (err, connection) => {
-		if (err) throw new Error(err)
-		console.log('connected to database 🎉')
-
-		// Use the connection
-		try {
-			await connection.query('SELECT * FROM expenses', (err, rows) => {
-				if (err) throw new Error(err)
-				console.log(rows)
-			})
-		} catch (error) {
-			console.error(error)
-		}
-	})
-})().catch((err) => console.error(err.stack))
 
 // Define route to get all expenses
 router.get('/expenses', async (req, res) => {
@@ -36,7 +19,6 @@ router.get('/expenses', async (req, res) => {
 		if (error) {
 			res.status(500).json({ error })
 		} else {
-			console.log(results)
 			res.status(201).json(results)
 		}
 	})
@@ -51,15 +33,12 @@ router.post('/expenses', (req, res) => {
 			amount,
 			date: new Date(date).toISOString().slice(0, 19).replace('T', ' '),
 		},
-		(error, result, rows) => {
+		(error, results) => {
 			if (error) {
 				res.status(500).json({ error })
 			} else {
-				console.log({ rows })
-				console.log({ result })
+				res.status(201).json({ id: results.insertId, name, amount, date })
 			}
-
-			res.status(201).json(rows[0])
 		}
 	)
 })
@@ -82,14 +61,17 @@ router.put('/expenses/:id', (req, res) => {
 	const { name, amount, date } = req.body
 	pool.query(
 		'UPDATE expenses SET name = ?, amount = ?, date = ? WHERE id = ?',
-		[name, amount, date, id],
-		(error, result) => {
+		[
+			name,
+			amount,
+			new Date(date).toISOString().slice(0, 19).replace('T', ' '),
+			id,
+		],
+		(error) => {
 			if (error) {
 				res.status(500).json({ error })
-			} else if (result.affectedRows === 0) {
-				res.status(404).json({ message: 'Expense not found' })
 			} else {
-				res.status(200).json({ message: 'Expense updated successfully' })
+				res.status(200).json({ id, name, amount, date })
 			}
 		}
 	)
@@ -97,11 +79,9 @@ router.put('/expenses/:id', (req, res) => {
 
 router.delete('/expenses/:id', (req, res) => {
 	const { id } = req.params
-	pool.query('DELETE FROM expenses WHERE id = ?', [id], (error, result) => {
+	pool.query('DELETE FROM expenses WHERE id = ?', [id], (error) => {
 		if (error) {
 			res.status(500).json({ error })
-		} else if (result.affectedRows === 0) {
-			res.status(404).json({ message: 'Expense not found' })
 		} else {
 			res.status(200).json({ message: 'Expense deleted successfully' })
 		}
