@@ -1,0 +1,28 @@
+{
+	"name": "relational-node",
+	"version": "1.0.0",
+	"description": "a simple node.js project to demonstrate the usage of relational databases",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js"
+	},
+	"keywords": [
+		"sql",
+		"node.js",
+		"express",
+		"database"
+	],
+	"author": "Giridhar Talla",
+	"license": "ISC",
+	"devDependencies": {
+		"nodemon": "^2.0.22"
+	},
+	"dependencies": {
+		"body-parser": "^1.20.2",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"pg": "^8.10.0",
+		"sequelize": "^6.31.0"
+	}
+}
