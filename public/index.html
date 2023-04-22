@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Budget Tracker</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<h1>Expense Tracker</h1>
+			<div class="total-expense-container">
+				<h2>Total Expense: <span id="total-expense">0</span></h2>
+			</div>
+			<form>
+				<div class="field">
+					<label for="expense-name">Name:</label>
+					<input
+						type="text"
+						id="expense-name"
+						placeholder="eg. Household"
+						required
+					/>
+				</div>
+				<div class="field">
+					<label for="expense-amount">Amount:</label>
+					<input
+						type="number"
+						id="expense-amount"
+						min="0"
+						placeholder="$100"
+						required
+					/>
+				</div>
+				<div class="field">
+					<label for="expense-date">Date:</label>
+					<input type="date" id="expense-date" />
+				</div>
+				<button type="submit">Add Expense</button>
+			</form>
+
+			<h2>Expenses</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Amount</th>
+						<th>Date</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody id="expenses-table-body"></tbody>
+			</table>
+		</div>
+		<script src="script.js"></script>
+	</body>
+</html>
