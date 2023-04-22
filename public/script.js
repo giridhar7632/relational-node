@@ -1,4 +1,4 @@
-const API_ENDPOINT = `https://relational-node.onrender.com/expenses`
+const API_ENDPOINT = `https://giridhar7632-symmetrical-trout-xpx96w7rjw7cpqpw-3000.preview.app.github.dev/mysql/expenses`
 // Define variables for the DOM elements
 const form = document.querySelector('form')
 const expenseNameInput = document.querySelector('#expense-name')
