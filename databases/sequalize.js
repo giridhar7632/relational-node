@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 // Create an instance of Sequelize and connect to the database
-const sequelize = new Sequelize(process.env.MY_DB_STRING, {
+const sequelize = new Sequelize(process.env.MYSQL_CONNECTION_STRING, {
 	dialectOptions: {
 		ssl: {
 			require: true,

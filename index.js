@@ -14,12 +14,10 @@ app.use(bodyParser.json())
 // Use static middleware for frontend
 app.use(express.static(path.join(__dirname, 'public')))
 
-// const postgresRouter = require('./databases/postgres.js')
-// const mysqlRouter = require('./databases/mysql.js')
+const pgRouter = require('./databases/postgres.js')
 const sequalizeRouter = require('./databases/sequalize.js')
 
-// app.use('/pg', postgresRouter)
-// app.use('/mysql', mysqlRouter)
+app.use('/pg', pgRouter)
 app.use('/seq', sequalizeRouter)
 
 // Start the server

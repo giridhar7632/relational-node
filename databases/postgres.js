@@ -4,7 +4,7 @@ const router = express.Router()
 
 // Create a new client for handling database connections
 const pool = new Pool({
-	connectionString: process.env.CONNECTION_STRING,
+	connectionString: process.env.PG_CONNECTION_STRING,
 	ssl: true,
 })
 

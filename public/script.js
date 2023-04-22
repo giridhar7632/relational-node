@@ -1,4 +1,4 @@
-const API_ENDPOINT = `http://localhost:3000/seq/expenses`
+let API_ENDPOINT = `http://localhost:3000/pg/expenses`
 // Define variables for the DOM elements
 const form = document.querySelector('form')
 const expenseNameInput = document.querySelector('#expense-name')
@@ -6,7 +6,20 @@ const expenseAmountInput = document.querySelector('#expense-amount')
 const expenseDateInput = document.querySelector('#expense-date')
 const expensesTableBody = document.querySelector('#expenses-table-body')
 const totalExpensesContainer = document.querySelector('#total-expense')
+const toggleInput = document.getElementById('toggle-input')
 
+toggleInput.addEventListener('change', async () => {
+	if (toggleInput.checked) {
+		// Set API endpoint for MySQL
+		API_ENDPOINT = 'http://localhost:3000/seq/expenses'
+	} else {
+		// Set API endpoint for Postgres
+		API_ENDPOINT = 'http://localhost:3000/pg/expenses'
+	}
+
+	expenses = await getExpenses()
+	renderExpensesTableAndTotal()
+})
 // Define variables for the state
 let expenses = [
 	{ name: 'test1', amount: 100, date: new Date() },
