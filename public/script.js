@@ -116,7 +116,6 @@ async function renderExpensesTableAndTotal() {
 	// Clear the expenses table body
 	expensesTableBody.innerHTML = ''
 	// Render the expenses table rows
-	console.log(expenses)
 	expenses.forEach((expense, index) => {
 		const row = renderExpenseRow(expense, index)
 		expensesTableBody.appendChild(row)
@@ -157,8 +156,6 @@ expensesTableBody.addEventListener('click', async (event) => {
 	const button = event.target
 	const index = parseInt(button.dataset.index)
 
-	console.log({ button, index })
-
 	if (button.classList.contains('btn-delete')) {
 		// Remove the expense from the expenses array
 		await removeExpense(index)
@@ -193,6 +190,5 @@ expensesTableBody.addEventListener('click', async (event) => {
 
 window.addEventListener('DOMContentLoaded', async () => {
 	expenses = await getExpenses()
-	console.log(expenses)
 	renderExpensesTableAndTotal()
 })
