@@ -1,4 +1,4 @@
-let API_ENDPOINT = `http://localhost:3000/pg/expenses`
+let API_ENDPOINT = `https://relational-node.onrender.com/pg/expenses`
 // Define variables for the DOM elements
 const form = document.querySelector('form')
 const expenseNameInput = document.querySelector('#expense-name')
@@ -11,10 +11,10 @@ const toggleInput = document.getElementById('toggle-input')
 toggleInput.addEventListener('change', async () => {
 	if (toggleInput.checked) {
 		// Set API endpoint for MySQL
-		API_ENDPOINT = 'http://localhost:3000/seq/expenses'
+		API_ENDPOINT = 'https://relational-node.onrender.com/seq/expenses'
 	} else {
 		// Set API endpoint for Postgres
-		API_ENDPOINT = 'http://localhost:3000/pg/expenses'
+		API_ENDPOINT = 'https://relational-node.onrender.com/pg/expenses'
 	}
 
 	expenses = await getExpenses()
