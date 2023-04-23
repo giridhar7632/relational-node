@@ -1,3 +1,6 @@
-# Relational Node
+# 🔦 Relational Node Starter
 
-A simple node.js project to demonstrate the usage of relational databases 
+This is starter template for node.js project to demonstrate the usage of relational databases  (simple budget tracker)
+
+- ✨ [Final code](https://github.com/giridhar7632/relational-node)
+- 📝 [Link to article]()
