@@ -2,48 +2,28 @@ const { Pool } = require('pg')
 const express = require('express')
 const router = express.Router()
 
-// Create a new client for handling database connections
+// Create a new pool for handling database connections
+// using variables
+// const pool = new Pool({
+// 	user: 'your-user',
+// 	host: 'localhost',
+// 	database: 'your-database',
+// 	password: 'your-password',
+// 	port: 5432,
+// })
+
+// or using connection string
 const pool = new Pool({
 	connectionString: process.env.PG_CONNECTION_STRING,
 	ssl: true,
 })
 
-// Define function to get all expenses from the database
-async function getExpenses() {
-	const query = 'SELECT * FROM expenses'
-	const { rows } = await pool.query(query)
-	return rows
-}
-
-// Define function to add an expense to the database
-async function addExpense(expense) {
-	const { name, amount, date } = expense
-	const query =
-		'INSERT INTO expenses (name, amount, date) VALUES ($1, $2, $3) RETURNING *'
-	const result = await pool.query(query, [name, amount, date])
-	return result.rows[0]
-}
-
-// Define function to remove an expense from the database
-async function removeExpense(id) {
-	const query = 'DELETE FROM expenses WHERE id = $1'
-	await pool.query(query, [id])
-}
-
-// Define function to update an expense in the database
-async function updateExpense(id, updatedExpense) {
-	const { name, amount, date } = updatedExpense
-	const query =
-		'UPDATE expenses SET name = $1, amount = $2, date = $3 WHERE id = $4 RETURNING *'
-	const result = await pool.query(query, [name, amount, date, id])
-	return result.rows[0]
-}
-
 // Define route to get all expenses
 router.get('/expenses', async (req, res) => {
 	try {
-		const expenses = await getExpenses()
-		res.json(expenses)
+		const query = 'SELECT * FROM expenses'
+		const { rows } = await pool.query(query)
+		res.json(rows)
 	} catch (err) {
 		console.error(err)
 		res.status(500).json({ error: 'Internal server error' })
@@ -53,9 +33,12 @@ router.get('/expenses', async (req, res) => {
 // Define route to add a new expense
 router.post('/expenses', async (req, res) => {
 	try {
-		const expense = req.body
-		const data = await addExpense(expense)
-		res.status(201).json(data)
+		const { name, amount, date } = req.body
+		const query =
+			'INSERT INTO expenses (name, amount, date) VALUES ($1, $2, $3) RETURNING *'
+		const { rows } = await pool.query(query, [name, amount, date])
+
+		res.status(201).json(rows[0])
 	} catch (err) {
 		console.error(err)
 		res.status(500).json({ error: 'Internal server error' })
@@ -66,7 +49,8 @@ router.post('/expenses', async (req, res) => {
 router.delete('/expenses/:id', async (req, res) => {
 	try {
 		const id = req.params.id
-		await removeExpense(id)
+		const query = 'DELETE FROM expenses WHERE id = $1'
+		await pool.query(query, [id])
 		res.sendStatus(200)
 	} catch (err) {
 		console.error(err)
@@ -78,9 +62,11 @@ router.delete('/expenses/:id', async (req, res) => {
 router.put('/expenses/:id', async (req, res) => {
 	try {
 		const id = req.params.id
-		const updatedExpense = req.body
-		const newExpense = await updateExpense(id, updatedExpense)
-		res.status(201).json(newExpense)
+		const { name, amount, date } = req.body
+		const query =
+			'UPDATE expenses SET name = $1, amount = $2, date = $3 WHERE id = $4 RETURNING *'
+		const { rows } = await pool.query(query, [name, amount, date, id])
+		res.status(201).json(rows[0])
 	} catch (err) {
 		console.error(err)
 		res.status(500).json({ error: 'Internal server error' })
