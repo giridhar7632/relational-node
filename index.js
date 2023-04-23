@@ -14,12 +14,6 @@ app.use(bodyParser.json())
 // Use static middleware for frontend
 app.use(express.static(path.join(__dirname, 'public')))
 
-const pgRouter = require('./databases/postgres.js')
-const sequalizeRouter = require('./databases/sequalize.js')
-
-app.use('/pg', pgRouter)
-app.use('/seq', sequalizeRouter)
-
 // Start the server
 const PORT = process.env.PORT || 3000
 app.listen(PORT, async () => {
